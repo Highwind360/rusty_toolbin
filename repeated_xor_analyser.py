@@ -40,7 +40,7 @@ def multi_col_freq_analysis(ciphertext, key_len):
 def xor(c, k):
     return ''.join(chr(x ^ y) for x, y in izip(c, cycle(k)))
 
-if __name__ == '__main__':
+def main():
     if len(sys.argv) != 2:
         print('Usage: {} ciphertextfile keyfile'.format(sys.argv[0]))
 
@@ -69,4 +69,6 @@ if __name__ == '__main__':
         c_num.append(ord(ch))
 
     print(xor(c_num, k))
-    exit(0)
+
+if __name__ == '__main__':
+    main()
