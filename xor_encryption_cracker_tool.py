@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 
-# Credit to to Gladius Maximus, whose solution
-# I am partially copying for its use in other ctfs
-# TODO: catch user input errors
-# TODO: add argparse
-# TODO: add support for plaintext with no spaces
-# TODO: add support for printing key as ascii
+"""
+    repeated_xor_tool.py
+
+    This takes a file with hex-encoded, xor-encrypted data, and cracks it.
+    Credit to to Gladius Maximus, whose solution I am partially copying 
+    for its use in other ctfs
+
+    TODO: catch user input errors
+    TODO: add argparse
+    TODO: add support for plaintext with no spaces
+    TODO: add support for printing key as ascii
+"""
 
 import sys
 from itertools import cycle, izip
@@ -22,6 +28,14 @@ def count_same(a, b):
     return c
 
 def kasiski_examine(c, l=20):
+    """
+    Determines what the probable key length is by searching for similar
+    patterns at certain intervals in the data. When the interval length == the
+    key length is when the most repeats are most likely to be seen. 
+
+    c: the ciphertext as a string
+    l: the range of key intervals to examine
+    """
     graph = ''
     for i in range(1, l):
         freq = count_same(c, shift(c, i))
@@ -29,6 +43,13 @@ def kasiski_examine(c, l=20):
     return graph
 
 def multi_col_freq_analysis(ciphertext, key_len):
+    """
+    Performs frequency analysis, but compartmentalizes the analysis to
+    characters that are separated by a certain interval. This is because, with
+    repeated key xor, these will all have been xor'd by the same byte, meaning
+    frequency analysis will be as efficient as it would be with a substitution
+    cipher
+    """
     frequencies = []
     for i in range(key_len):
         f = Counter()
