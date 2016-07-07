@@ -2,7 +2,7 @@
 
 """
 example.py
-Grayson Sinclair
+Colm Sinclair
 
 This is the description.
 """
