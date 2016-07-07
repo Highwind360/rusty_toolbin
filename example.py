@@ -4,7 +4,7 @@
 example.py
 Colm Sinclair
 
-This is the description.
+This is the description. It's not very descriptive.
 """
 
 # This is a comment
