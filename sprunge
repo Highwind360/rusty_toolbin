@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+#	sprunge.sh
+#	Grayson Sinclair
+#
+#	Utility for easily uploading files to the command line pastebin, sprunge.
+
+SPRUNGE_LOGS=$HOME/.sprunge.log
+
+if [ -z "$1" ]
+	then
+		echo "Usage: $0 infile"
+	else
+		cat $1 | curl -F 'sprunge=<-' http://sprunge.us | tee -a $SPRUNGE_LOGS
+fi
