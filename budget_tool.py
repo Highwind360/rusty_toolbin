@@ -4,8 +4,8 @@
     budget_tool.py
 
     A budgeting tool. Tells you how much you can spend per day.
-    TODO: given an amount of money and a final day, have it tell you your daily budget
     TODO: given an income (amount per interval), and a savings goal, tell daily budget
+    TODO: save constants in a database
 """
 
 from argparse import ArgumentParser
