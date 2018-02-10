@@ -32,20 +32,45 @@ def score_repcount(goal, done):
 
     return 1 - cos((pi/2)*(done/goal))
 
-def calculate_score(exercise):
+def calculate_exercise_score(exercise):
     """Given an exercise, how well did the user score on that exercise?."""
     reps = int(input("How many %s did you do? " % exercise["name"]))
     return int(ceil(exercise["value"] * score_repcount(exercise["goal"], reps)))
 
 def main():
-    # TODO: add a main menu to select the kind of exercise you did
+    # TODO: make the exercise menu a submenu
+    #       dynamically created from config
+    # TODO: save the state of things
     # TODO: allow user to add exercises/other incentives
     # TODO: allow user to add rewards
     print("Welcome to the incentivizer.")
-    score = calculate_score(EXERCISES["Push-Up"])
-    c_score = int(input("How many cookies have you eaten? ")) * COOKIE_COST
-    print("You've earned %i and spent %i of it on cookies." % (score, c_score), end=" ")
-    print("You have %i remaining." % (score - c_score))
+
+    score = {}
+    c_score = 0
+    running = True
+    try:
+        while running:
+            choice = input("What would you like to do?\n" + \
+                  "1. Report an exercise\n" + \
+                  ("2. Spend Points on cookies (%i points each)\n" % COOKIE_COST) + \
+                  "3. Quit\nYour choice => ")
+
+            if int(choice) == 1:
+                score["Push-Up"] = calculate_exercise_score(EXERCISES["Push-Up"])
+            elif int(choice) == 2:
+                c_score = int(input("How many cookies have you eaten? ")) * COOKIE_COST
+            elif int(choice) == 3:
+                running = False
+            else:
+                print("Sorry. I couldn't understand your input.")
+
+            total_score = sum(score.values())
+            print("You've earned %i and spent %i of it on cookies." %
+                (total_score, c_score), end=" ")
+            print("You have %i remaining." % (total_score - c_score))
+    except KeyboardInterrupt:
+        pass
+    print("Goodbye!")
 
 
 if __name__ == "__main__":
